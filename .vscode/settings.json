@@ -1,0 +1,19 @@
+{
+  "eslint.validate": ["typescript", "typescriptreact", "javascript"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.eol": "\n",
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": false
+    }
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.enable": true,
+  "eslint.run": "onSave",
+  "eslint.debug": true,
+  "editor.formatOnSave": false,
+  "editor.formatOnPaste": false
+}

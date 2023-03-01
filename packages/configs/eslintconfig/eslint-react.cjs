@@ -7,6 +7,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
@@ -59,8 +60,8 @@ module.exports = {
     ],
 
     //  用逗号分割多行结构，始终加上最有一个逗号（单行不用）
-    'comma-dangle': 'off',
-    '@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
+    // 'comma-dangle': 'off',
+    // '@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
 
     // 不要使用 new Array() 和 Array() 创建数组，除非为了构造某一长度的空数组
     'no-array-constructor': 'off',
