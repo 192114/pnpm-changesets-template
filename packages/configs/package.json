@@ -8,7 +8,7 @@
     "config"
   ],
   "files": [
-    "./eslintconfig/eslint-react.cjs",
+    "./eslintconfig/eslint-react-ts.cjs",
     "./tsconfig/tsconfig.base.json"
   ],
   "author": "liar",
