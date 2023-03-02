@@ -1,11 +1,12 @@
 {
-  "name": "pnpm-changesets-template",
+  "name": "pnpm-workspace",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "prepare": "husky install",
-    "dev": "pnpm run -r dev"
+    "dev": "pnpm run -r dev",
+    "build": "pnpm run -r build"
   },
   "keywords": [],
   "author": "",

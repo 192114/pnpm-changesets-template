@@ -1,20 +1,20 @@
 {
   "compilerOptions": {
-    "skipLibCheck": true, // 跳过对内置的 `lib.d.ts` 系列与 `@types/` 下的声明文件的检查，这也能进一步加快编译速度
-    "skipDefaultLibCheck": true, // 跳过那些使用了 `/// <reference no-default-lib="true"/>` 指令的声明文件（如内置的 `lib.d.ts`）
-    "strictNullChecks": true, // 禁止null 和 undefined 会被隐式地视为任何类型的子类型
-    "strictFunctionTypes": true, // 对参数类型启用逆变检查
-    "strictPropertyInitialization": true, // 要求 Class 中的所有属性都需要存在一个初始值，无论是在声明时就提供还是在构造函数中初始化
-    "useUnknownInCatchVariables": true, // 启用此配置后，try/catch 语句中 catch 的 error 类型会被更改为 unknown （否则是 any 类型）
-    "noImplicitThis": true, // 禁止隐式使用this 需声明
-    "noUnusedLocals": true, // 禁止未使用的变量
-    "noUnusedParameters": true, // 禁止未使用的声明
-    "noImplicitReturns": true, // 确保所有返回值类型中不包含 undefined 的函数，在其内部所有的执行路径上都需要有 return 语句
-    "noFallthroughCasesInSwitch": true, //  switch case 语句中不会存在连续执行多个 case 语句的情况
-    "moduleResolution": "node", // 模块解析的方式
-    "allowSyntheticDefaultImports": true, // 会为没有默认导出的 CJS 模块“模拟”出默认的导出，以提供更好的类型提示
-    "esModuleInterop": true, // 配置来在 ESM 导入 CJS 这种情况时引入额外的辅助函数，进一步对兼容性进行支持
-    "experimentalDecorators": true, //装饰器相关
-    "emitDecoratorMetadata": true // 装饰器相关
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "useUnknownInCatchVariables": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   }
 }
