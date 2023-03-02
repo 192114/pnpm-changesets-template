@@ -1,6 +1,5 @@
 module.exports = {
-  // extends: ['@infras/config/eslintconfig/eslint-react.cjs'],
-  ...require("@infras/config/eslintconfig/eslint-react.cjs"),
+  ...require('@infras/config/eslintconfig/eslint-react.cjs'),
   overrides: [
     {
       files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
