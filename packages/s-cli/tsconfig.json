@@ -1,0 +1,14 @@
+{
+  "extends": "@infras/config/tsconfig/tsconfig.base.json",
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "sourceMap": true,
+    "outDir": "./lib"
+  },
+  "include": [".eslintrc.js", "bin/**/*"],
+  "exclude": ["node_modules", "lib/**/*"]
+}
