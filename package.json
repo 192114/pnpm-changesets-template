@@ -6,13 +6,15 @@
   "scripts": {
     "prepare": "husky install",
     "dev": "pnpm run -r dev",
-    "build": "pnpm run -r build"
+    "build": "pnpm run -r build",
+    "init": "vite-create init"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@changesets/cli": "^2.26.0",
+    "@infras/vite-create": "workspace:^1.0.0",
     "eslint": "^8.34.0",
     "husky": "^8.0.0",
     "lint-staged": "^13.1.2",
