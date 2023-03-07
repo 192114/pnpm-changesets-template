@@ -1,20 +1,38 @@
-// import inquirer from 'inquirer'
-// import validate from 'validate-npm-package-name'
+import inquirer from 'inquirer'
+import validate from 'validate-npm-package-name'
 
-// console.log(validate)
+function validatePackageName(projectName: string) {
+  if (!validate(projectName).validForNewPackages) {
+    return '包名不合法'
+  }
 
-// export async function init(projectName: string): Promise<void> {
-//   if (validate(projectName).validForNewPackages) {
-//     return
-//   }
+  if (!projectName.startsWith('@apps/')) {
+    return '包名称格式不正确(exp: @apps/react-app)'
+  }
 
-//   if (!projectName.startsWith('@apps/')) {
-//     throw new Error('包名格式不正确 例如：@apps/vite-demo')
-//   }
+  console.log(projectName)
+  return true
+}
 
-//   try {
-//     const projectRes = await inquirer.prompt()
-//   } catch (error) {
-//     throw error
-//   }
-// }
+export async function init(projectName: string): Promise<void> {
+  await inquirer.prompt([
+    {
+      type: 'input',
+      message: '包名称',
+      default: projectName,
+      name: 'projectName',
+      when: validatePackageName(projectName) !== true,
+      validate(input: string) {
+        return validatePackageName(input)
+      },
+    },
+    {
+      type: 'input',
+      message: '项目描述',
+      name: 'description',
+      validate(input: string) {
+        return input !== ''
+      },
+    },
+  ])
+}
