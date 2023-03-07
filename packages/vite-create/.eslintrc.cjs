@@ -1,5 +1,6 @@
 module.exports = {
   ...require('@infras/config/eslintconfig/eslint-node-ts.cjs'),
+  ignorePatterns: ["bin/*.js"],
   overrides: [
     {
       files: ['*.ts', '*.js'],
