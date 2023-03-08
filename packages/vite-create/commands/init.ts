@@ -1,5 +1,14 @@
 import inquirer from 'inquirer'
 import validate from 'validate-npm-package-name'
+import fs from 'fs-extra'
+import path from 'path'
+
+interface IAnswerType {
+  projectName: string
+  description: string
+}
+
+// type AnswerType = ReturnType<typeof Answers>
 
 function validatePackageName(projectName: string) {
   if (!validate(projectName).validForNewPackages) {
@@ -14,8 +23,14 @@ function validatePackageName(projectName: string) {
   return true
 }
 
-export async function init(projectName: string): Promise<void> {
-  await inquirer.prompt([
+export async function init(projectName: string, configPath: string): Promise<void> {
+  const configFileBuffer = await fs.readFile(configPath)
+
+  const configJson = JSON.parse(configFileBuffer.toString()) as IAnswerType[]
+
+  console.log(configJson)
+
+  const projectRes = (await inquirer.prompt([
     {
       type: 'input',
       message: '包名称',
@@ -28,11 +43,21 @@ export async function init(projectName: string): Promise<void> {
     },
     {
       type: 'input',
+      message: '项目文件夹名称',
+      name: 'dirname',
+      validate(input: string) {
+        return !fs.pathExistsSync(path.resolve(process.cwd(), './apps/', input))
+      },
+    },
+    {
+      type: 'input',
       message: '项目描述',
       name: 'description',
       validate(input: string) {
         return input !== ''
       },
     },
-  ])
+  ])) as IAnswerType
+
+  console.log(projectRes)
 }
