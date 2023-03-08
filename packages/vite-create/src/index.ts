@@ -15,7 +15,6 @@ program
   .option('-c', '--config', path.resolve(excutePath, './configs/appList.json'))
   .description('初始化项目')
   .action(async (projectName: string, option: IActionOptionType) => {
-    console.log(option)
     const configPath = option.c
     await init(projectName, configPath)
   })

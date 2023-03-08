@@ -1,14 +1,13 @@
-import inquirer from 'inquirer'
+import prompts from 'prompts'
 import validate from 'validate-npm-package-name'
 import fs from 'fs-extra'
 import path from 'path'
 
 interface IAnswerType {
   projectName: string
+  dirname: string
   description: string
 }
-
-// type AnswerType = ReturnType<typeof Answers>
 
 function validatePackageName(projectName: string) {
   if (!validate(projectName).validForNewPackages) {
@@ -19,45 +18,69 @@ function validatePackageName(projectName: string) {
     return '包名称格式不正确(exp: @apps/react-app)'
   }
 
-  console.log(projectName)
   return true
 }
 
 export async function init(projectName: string, configPath: string): Promise<void> {
-  const configFileBuffer = await fs.readFile(configPath)
+  const appListJson = fs.readJsonSync(configPath) as IAnswerType[]
 
-  const configJson = JSON.parse(configFileBuffer.toString()) as IAnswerType[]
+  const projectRes: IAnswerType = await prompts(
+    [
+      {
+        type: validatePackageName(projectName) !== true ? 'text' : null,
+        name: 'projectName',
+        message: '请输入包名称',
+        validate(value: string) {
+          const res = validatePackageName(value)
+          if (res !== true) {
+            return res
+          }
 
-  console.log(configJson)
+          if (appListJson.findIndex(appItem => appItem.projectName === value) >= 0) {
+            return '包名已存在'
+          }
 
-  const projectRes = (await inquirer.prompt([
-    {
-      type: 'input',
-      message: '包名称',
-      default: projectName,
-      name: 'projectName',
-      when: validatePackageName(projectName) !== true,
-      validate(input: string) {
-        return validatePackageName(input)
+          return true
+        },
+        initial: projectName,
       },
-    },
-    {
-      type: 'input',
-      message: '项目文件夹名称',
-      name: 'dirname',
-      validate(input: string) {
-        return !fs.pathExistsSync(path.resolve(process.cwd(), './apps/', input))
+      {
+        type: 'text',
+        message: '项目文件夹名称',
+        name: 'dirname',
+        validate(value: string) {
+          if (!fs.pathExistsSync(path.resolve(process.cwd(), './apps/', value))) {
+            return '当前目录已存在'
+          }
+          return true
+        },
       },
-    },
-    {
-      type: 'input',
-      message: '项目描述',
-      name: 'description',
-      validate(input: string) {
-        return input !== ''
+      {
+        type: 'text',
+        message: '项目项目描述',
+        name: 'description',
+        validate(value: string) {
+          if (value === '') {
+            return '项目描述不能为空'
+          }
+          return true
+        },
       },
-    },
-  ])) as IAnswerType
+    ],
+    {
+      onCancel() {
+        return false
+      },
+    }
+  )
 
   console.log(projectRes)
+
+  appListJson.push(projectRes)
+
+  await fs.writeJSON(configPath, appListJson)
+  console.log(new Date().getTime())
+
+  await fs.ensureDir(path.resolve(process.cwd(), './apps/', projectRes.dirname))
+  console.log(new Date().getTime())
 }
