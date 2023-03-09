@@ -22,8 +22,8 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "prettier --write --list-different",
-      "eslint --cache --fix"
+      "eslint --cache --fix",
+      "prettier --write --list-different"
     ],
     "*.{json,md,html,css,scss,sass,less,styl}": [
       "prettier --write --list-different"

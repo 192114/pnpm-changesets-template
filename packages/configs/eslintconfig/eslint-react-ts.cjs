@@ -207,8 +207,8 @@ module.exports = {
       'error',
       {
         multiline: {
-          delimiter: 'semi',
-          requireLast: true,
+          delimiter: 'none',
+          requireLast: true, // 与 prettier 冲突
         },
         singleline: {
           delimiter: 'semi',
