@@ -4,9 +4,9 @@ import fs from 'fs-extra'
 import path from 'path'
 
 interface IAnswerType {
-  projectName: string
-  dirname: string
-  description: string
+  projectName: string;
+  dirname: string;
+  description: string;
 }
 
 function validatePackageName(projectName: string) {

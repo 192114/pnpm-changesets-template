@@ -7,8 +7,7 @@
     "prepare": "husky install",
     "dev": "pnpm run -r dev",
     "build": "pnpm run -r build",
-    "init": "vite-create init",
-    "eslint": "pnpm run -r eslint"
+    "init": "vite-create init"
   },
   "keywords": [],
   "author": "",
@@ -23,8 +22,8 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "pnpm run eslint",
-      "prettier --write --list-different"
+      "prettier --write --list-different",
+      "eslint --cache --fix"
     ],
     "*.{json,md,html,css,scss,sass,less,styl}": [
       "prettier --write --list-different"
