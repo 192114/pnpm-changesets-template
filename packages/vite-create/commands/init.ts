@@ -69,18 +69,21 @@ export async function init(projectName: string, configPath: string): Promise<voi
     ],
     {
       onCancel() {
+        console.log('cancel')
+        // false 终止所有问题 true 终止当前问题 继续下一个
         return false
       },
     }
   )
 
-  console.log(projectRes)
+  // 处理中止的情况
+  if (!projectRes.projectName || !projectRes.dirname || !projectRes.description) {
+    return
+  }
 
   appListJson.push(projectRes)
 
   await fs.writeJSON(configPath, appListJson)
-  console.log(new Date().getTime())
 
   await fs.ensureDir(path.resolve(process.cwd(), './apps/', projectRes.dirname))
-  console.log(new Date().getTime())
 }
