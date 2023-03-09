@@ -1,20 +1,23 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 import App from '~/App'
+import { routes } from '~/routes'
 import '~/styles/index.css'
 
 const router = createHashRouter([
   {
-    path: '/',
+    path: '',
     element: <App />,
     errorElement: <div>error</div>,
-    children: [],
+    children: routes,
   },
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Suspense>
+      <RouterProvider router={router} />
+    </Suspense>
   </React.StrictMode>
 )
