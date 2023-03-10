@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 import App from '~/App'
 import { routes } from '~/routes'
+import 'sanitize.css'
 import '~/styles/index.css'
 
 const router = createHashRouter([
