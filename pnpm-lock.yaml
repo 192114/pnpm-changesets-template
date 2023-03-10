@@ -75,6 +75,7 @@ importers:
     specifiers:
       '@infras/config': workspace:^0.0.0
       '@types/fs-extra': ^11.0.1
+      '@types/git-clone': ^0.2.0
       '@types/node': ^18.14.6
       '@types/prompts': ^2.4.2
       '@types/validate-npm-package-name': ^4.0.0
@@ -98,6 +99,7 @@ importers:
     devDependencies:
       '@infras/config': link:../configs
       '@types/fs-extra': 11.0.1
+      '@types/git-clone': 0.2.0
       '@types/node': 18.14.6
       '@types/prompts': 2.4.2
       '@types/validate-npm-package-name': 4.0.0
@@ -2228,6 +2230,10 @@ packages:
     dependencies:
       '@types/jsonfile': 6.1.1
       '@types/node': 18.14.6
+    dev: true
+
+  /@types/git-clone/0.2.0:
+    resolution: {integrity: sha512-RnYrs8sZWTBfeg8hAh5VwM3wEBlIaraQfo8h9FSxmX09KQ9VUDuL9AFzR3doV6IUMzEwjee6fOViIhqFvs1ulA==}
     dev: true
 
   /@types/is-ci/3.0.0:
