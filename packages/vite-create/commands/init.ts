@@ -4,12 +4,20 @@ import fs from 'fs-extra'
 import path from 'path'
 import clone from 'git-clone/promise.js'
 import ora from 'ora'
+import Handlebars from 'handlebars'
+import chalk from 'chalk'
+import shell from 'shelljs'
+
+const log = console.log
 
 interface IAnswerType {
   projectName: string
   dirname: string
   description: string
-  port: number
+}
+
+interface IInstallAnsType {
+  isInstall: boolean
 }
 
 function validatePackageName(projectName: string) {
@@ -69,22 +77,6 @@ export async function init(projectName: string, configPath: string): Promise<voi
           return true
         },
       },
-      {
-        type: 'number',
-        message: '项目启动端口号',
-        name: 'port',
-        validate(value: number) {
-          if (value <= 5172 || value >= 8080) {
-            return '端口限制在5172 - 8080 之间！'
-          }
-
-          if (appListJson.findIndex(item => item.port === value) >= 0) {
-            return '端口号已被占用！'
-          }
-
-          return true
-        },
-      },
     ],
     {
       onCancel() {
@@ -96,31 +88,55 @@ export async function init(projectName: string, configPath: string): Promise<voi
   )
 
   // 处理中止的情况
-  if (
-    !projectRes.projectName ||
-    !projectRes.dirname ||
-    !projectRes.description ||
-    !projectRes.port
-  ) {
+  if (!projectRes.projectName || !projectRes.dirname || !projectRes.description) {
     return
   }
 
+  const { projectName: pName, dirname, description } = projectRes
+
   // 创建文件夹
-  const targetDir = path.resolve(process.cwd(), './apps/', projectRes.dirname)
+  const targetDir = path.resolve(process.cwd(), './apps/', dirname)
   const spinForCreateDir = ora(`创建${targetDir}目录`).start()
-  await fs.ensureDir(path.resolve(process.cwd(), './apps/', projectRes.dirname))
+  await fs.ensureDir(targetDir)
   spinForCreateDir.succeed('目录创建成功！')
   // 从github上下载工程
   const spinCloneTemplate = ora('模版下载中').start()
-  await clone(
-    'https://github.com/192114/vite-react-ts-template-for-monorepo.git',
-    path.resolve(process.cwd(), './apps/', projectRes.dirname)
-  )
+  await clone('https://github.com/192114/vite-react-ts-template-for-monorepo.git', targetDir)
   spinCloneTemplate.succeed('模版下载成功！')
+
   // 修改模版
-  // handlebars 修改模版
+  const spinTemplate = ora('模板生成中')
+  const targetPackageFile = await fs.readFile(path.resolve(targetDir, './package.json'))
+
+  const packageJsonStr = targetPackageFile.toString()
+
+  const packageJsonTemplate = Handlebars.compile(packageJsonStr)
+
+  packageJsonTemplate({ projectName: pName, description })
+
+  spinTemplate.succeed('模板生成成功！')
 
   appListJson.push(projectRes)
 
   await fs.writeJSON(configPath, appListJson)
+
+  log(chalk.green('项目生成成功！'))
+
+  const installRes: IInstallAnsType = await prompts({
+    type: 'confirm',
+    message: '是否自动安装依赖？',
+    name: 'isInstall',
+  })
+
+  if (installRes.isInstall) {
+    const pnpmInstallRes = shell.exec(`pnpm --filter @apps/${pName} install`)
+
+    if (pnpmInstallRes.code === 0) {
+      log(chalk.green('pnpm install 命令执行成功'))
+    } else {
+      log(chalk.red('pnpm install 命令执行失败'))
+    }
+  }
+
+  log(`启动:${chalk.blue.bold.underline(`pnpm --filter @apps/${pName} run dev`)}`)
 }
