@@ -10,16 +10,6 @@ import shell from 'shelljs'
 
 const log = console.log
 
-interface IAnswerType {
-  projectName: string
-  dirname: string
-  description: string
-}
-
-interface IInstallAnsType {
-  isInstall: boolean
-}
-
 function validatePackageName(projectName: string) {
   if (!validate(projectName).validForNewPackages) {
     return '包名不合法'
@@ -32,7 +22,7 @@ function validatePackageName(projectName: string) {
   return true
 }
 
-export async function init(projectName: string, configPath: string): Promise<void> {
+export async function create(projectName: string, configPath: string): Promise<void> {
   const appListJson = fs.readJsonSync(configPath) as IAnswerType[]
 
   const projectRes: IAnswerType = await prompts(
@@ -106,13 +96,16 @@ export async function init(projectName: string, configPath: string): Promise<voi
 
   // 修改模版
   const spinTemplate = ora('模板生成中')
-  const targetPackageFile = await fs.readFile(path.resolve(targetDir, './package.json'))
+  const packageJsonPath = path.resolve(targetDir, './package.json')
+  const targetPackageFile = await fs.readFile(packageJsonPath)
 
   const packageJsonStr = targetPackageFile.toString()
 
   const packageJsonTemplate = Handlebars.compile(packageJsonStr)
 
-  packageJsonTemplate({ projectName: pName, description })
+  const newPackageJsonStr = packageJsonTemplate({ projectName: pName, description })
+
+  await fs.writeFile(packageJsonPath, Buffer.from(newPackageJsonStr, 'utf8'))
 
   spinTemplate.succeed('模板生成成功！')
 
@@ -129,7 +122,7 @@ export async function init(projectName: string, configPath: string): Promise<voi
   })
 
   if (installRes.isInstall) {
-    const pnpmInstallRes = shell.exec(`pnpm --filter @apps/${pName} install`)
+    const pnpmInstallRes = shell.exec(`pnpm --filter ${pName} install`)
 
     if (pnpmInstallRes.code === 0) {
       log(chalk.green('pnpm install 命令执行成功'))
@@ -138,5 +131,5 @@ export async function init(projectName: string, configPath: string): Promise<voi
     }
   }
 
-  log(`启动:${chalk.blue.bold.underline(`pnpm --filter @apps/${pName} run dev`)}`)
+  log(`启动:${chalk.blue.bold.underline(`pnpm --filter ${pName} run dev`)}`)
 }
