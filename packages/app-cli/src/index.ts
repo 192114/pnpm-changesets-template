@@ -2,6 +2,7 @@ import { Command } from 'commander'
 import { create } from '../commands/create'
 import { remove } from '../commands/remove'
 import { clean } from '../commands/clean'
+import { dev } from '../commands/dev'
 import path from 'path'
 
 interface IActionOptionType {
@@ -39,6 +40,15 @@ program
   .action(async (projectName: string, option: IActionOptionType) => {
     const configPath = option.c
     await clean(projectName, configPath)
+  })
+
+program
+  .command('dev [projectName]')
+  .option('-c', '--config', defaultConfigPath)
+  .description('启动项目')
+  .action(async (projectName: string, option: IActionOptionType) => {
+    const configPath = option.c
+    await dev(projectName, configPath)
   })
 
 program.parse()

@@ -8,7 +8,7 @@ import shell from 'shelljs'
 import fs from 'fs-extra'
 import path from 'path'
 
-const log = console.log
+import { log, genChoicesList, appsDirPath } from '../tools'
 
 export async function remove(projectName: string, configPath: string): Promise<void> {
   const appListJson = (await fs.readJson(configPath)) as IAnswerType[]
@@ -21,7 +21,7 @@ export async function remove(projectName: string, configPath: string): Promise<v
       log(chalk.red('项目不存在！'))
       shell.exit(1)
     } else {
-      const dirPathname = path.resolve(process.cwd(), './apps/', current.dirname)
+      const dirPathname = path.resolve(appsDirPath, current.dirname)
       const deleteSpin = ora(`删除项目${projectName}中`).start()
       const nextAppList = appListJson.filter(item => item.projectName !== projectName)
       await fs.remove(dirPathname)
@@ -30,10 +30,7 @@ export async function remove(projectName: string, configPath: string): Promise<v
     }
   } else {
     // 手动列表选择删除
-    const appListChoices = appListJson.map(item => ({
-      title: `${item.projectName}(${item.dirname})`,
-      value: item.dirname,
-    }))
+    const appListChoices = genChoicesList(appListJson)
 
     const removeRes: IChoicesType = await prompts({
       type: 'multiselect',
@@ -54,11 +51,10 @@ export async function remove(projectName: string, configPath: string): Promise<v
     )
 
     for (const current of choicesList) {
-      const pName = appListChoices.find(item => item.value === current)!.title
-      const deleteSpin = ora(`删除${pName}中`).start()
-      const dirPathname = path.resolve(process.cwd(), './apps/', current)
+      const dirPathname = path.resolve(appsDirPath, current)
+      const deleteSpin = ora(`删除${dirPathname}中`).start()
       await fs.remove(dirPathname)
-      deleteSpin.succeed(`删除${pName}成功！`)
+      deleteSpin.succeed(`删除${dirPathname}成功！`)
     }
 
     await fs.writeJSON(configPath, nextAppList)

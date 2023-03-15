@@ -11,7 +11,7 @@ import Handlebars from 'handlebars'
 import chalk from 'chalk'
 import shell from 'shelljs'
 
-const log = console.log
+import { log, appsDirPath } from '../tools'
 
 function validatePackageName(projectName: string) {
   if (!validate(projectName).validForNewPackages) {
@@ -53,10 +53,16 @@ export async function create(projectName: string, configPath: string): Promise<v
         message: '项目文件夹名称',
         name: 'dirname',
         validate(value: string) {
-          if (fs.pathExistsSync(path.resolve(process.cwd(), './apps/', value))) {
+          if (!value) {
+            return '目录不能为空'
+          }
+          if (fs.pathExistsSync(path.resolve(appsDirPath, value))) {
             return '当前目录已存在'
           }
           return true
+        },
+        initial: (_, val) => {
+          return (val.projectName as string).slice(6)
         },
       },
       {
@@ -73,7 +79,6 @@ export async function create(projectName: string, configPath: string): Promise<v
     ],
     {
       onCancel() {
-        console.log('cancel')
         // false 终止所有问题 true 终止当前问题 继续下一个
         return false
       },
@@ -88,10 +93,10 @@ export async function create(projectName: string, configPath: string): Promise<v
   const { projectName: pName, dirname, description } = projectRes
 
   // 创建文件夹
-  const targetDir = path.resolve(process.cwd(), './apps/', dirname)
+  const targetDir = path.resolve(appsDirPath, dirname)
   const spinForCreateDir = ora(`创建${targetDir}目录`).start()
   await fs.ensureDir(targetDir)
-  spinForCreateDir.succeed(`${targetDir}目录创建成功！`)
+  spinForCreateDir.succeed(chalk.green(`${targetDir}目录创建成功！`))
   // 从github上下载工程
   const spinCloneTemplate = ora('模版下载中').start()
   await clone('https://github.com/192114/vite-react-ts-template-for-monorepo.git', targetDir)
@@ -123,6 +128,7 @@ export async function create(projectName: string, configPath: string): Promise<v
     type: 'confirm',
     message: '是否自动安装依赖？',
     name: 'isInstall',
+    initial: true,
   })
 
   if (installRes.isInstall) {

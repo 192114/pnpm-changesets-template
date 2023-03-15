@@ -9,7 +9,8 @@
     "build": "pnpm run -r build",
     "create": "app-cli create",
     "remove": "app-cli remove",
-    "clean": "app-cli clean"
+    "clean": "app-cli clean",
+    "dev:app": "app-cli dev"
   },
   "keywords": [],
   "author": "",
