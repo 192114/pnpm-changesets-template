@@ -8,6 +8,6 @@ interface IInstallAnsType {
   isInstall: boolean
 }
 
-interface IRemoveAnsType {
-  deleteList: string[]
+interface IChoicesType {
+  choicesList: string[]
 }

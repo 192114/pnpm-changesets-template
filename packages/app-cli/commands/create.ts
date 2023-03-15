@@ -1,3 +1,6 @@
+/**
+ * 初始化项目
+ */
 import prompts from 'prompts'
 import validate from 'validate-npm-package-name'
 import fs from 'fs-extra'
@@ -28,7 +31,7 @@ export async function create(projectName: string, configPath: string): Promise<v
   const projectRes: IAnswerType = await prompts(
     [
       {
-        type: validatePackageName(projectName) !== true ? 'text' : null,
+        type: 'text',
         name: 'projectName',
         message: '请输入包名称',
         validate(value: string) {
@@ -88,7 +91,7 @@ export async function create(projectName: string, configPath: string): Promise<v
   const targetDir = path.resolve(process.cwd(), './apps/', dirname)
   const spinForCreateDir = ora(`创建${targetDir}目录`).start()
   await fs.ensureDir(targetDir)
-  spinForCreateDir.succeed('目录创建成功！')
+  spinForCreateDir.succeed(`${targetDir}目录创建成功！`)
   // 从github上下载工程
   const spinCloneTemplate = ora('模版下载中').start()
   await clone('https://github.com/192114/vite-react-ts-template-for-monorepo.git', targetDir)
@@ -113,7 +116,8 @@ export async function create(projectName: string, configPath: string): Promise<v
 
   await fs.writeJSON(configPath, appListJson)
 
-  log(chalk.green('项目生成成功！'))
+  log(chalk.green(`${pName}项目生成成功！`))
+  log(`\n目录${chalk.green(targetDir)}`)
 
   const installRes: IInstallAnsType = await prompts({
     type: 'confirm',
@@ -122,6 +126,7 @@ export async function create(projectName: string, configPath: string): Promise<v
   })
 
   if (installRes.isInstall) {
+    log(chalk.blue(`执行 pnpm --filter ${pName} install`))
     const pnpmInstallRes = shell.exec(`pnpm --filter ${pName} install`)
 
     if (pnpmInstallRes.code === 0) {
@@ -131,5 +136,5 @@ export async function create(projectName: string, configPath: string): Promise<v
     }
   }
 
-  log(`启动:${chalk.blue.bold.underline(`pnpm --filter ${pName} run dev`)}`)
+  log(`启动:${chalk.blue.bold(`pnpm --filter ${pName} run dev`)}`)
 }

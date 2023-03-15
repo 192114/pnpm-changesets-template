@@ -7,15 +7,16 @@
     "prepare": "husky install",
     "dev": "pnpm run -r dev",
     "build": "pnpm run -r build",
-    "create": "vite-create create",
-    "remove": "vite-create remove"
+    "create": "app-cli create",
+    "remove": "app-cli remove",
+    "clean": "app-cli clean"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@changesets/cli": "^2.26.0",
-    "@infras/vite-create": "workspace:^1.0.0",
+    "@infras/app-cli": "workspace:*",
     "eslint": "^8.34.0",
     "husky": "^8.0.0",
     "lint-staged": "^13.1.2",

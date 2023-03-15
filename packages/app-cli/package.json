@@ -1,10 +1,10 @@
 {
-  "name": "@infras/vite-create",
+  "name": "@infras/app-cli",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "bin": {
-    "vite-create": "bin/bin.js"
+    "app-cli": "bin/bin.js"
   },
   "scripts": {
     "prepare": "pnpm run build",

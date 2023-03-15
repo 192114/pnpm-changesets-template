@@ -1,3 +1,6 @@
+/**
+ * 删除项目
+ */
 import chalk from 'chalk'
 import ora from 'ora'
 import prompts from 'prompts'
@@ -32,25 +35,25 @@ export async function remove(projectName: string, configPath: string): Promise<v
       value: item.dirname,
     }))
 
-    const removeRes: IRemoveAnsType = await prompts({
+    const removeRes: IChoicesType = await prompts({
       type: 'multiselect',
       message: '请选择要删除的包！',
       choices: appListChoices,
-      name: 'deleteList',
+      name: 'choicesList',
     })
 
-    const { deleteList } = removeRes
+    const { choicesList } = removeRes
 
-    if (!deleteList || deleteList.length === 0) {
+    if (!choicesList || choicesList.length === 0) {
       log(chalk.red('无删除项'))
       shell.exit(1)
     }
 
     const nextAppList = appListJson.filter(item =>
-      deleteList.every(deleteItem => deleteItem !== item.dirname)
+      choicesList.every(deleteItem => deleteItem !== item.dirname)
     )
 
-    for (const current of deleteList) {
+    for (const current of choicesList) {
       const pName = appListChoices.find(item => item.value === current)!.title
       const deleteSpin = ora(`删除${pName}中`).start()
       const dirPathname = path.resolve(process.cwd(), './apps/', current)
