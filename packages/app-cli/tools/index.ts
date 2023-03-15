@@ -1,10 +1,13 @@
 import path from 'path'
 import { type Choice } from 'prompts'
 
-export function genChoicesList(appList: IAnswerType[]): Choice[] {
+export function genChoicesList(
+  appList: IAnswerType[],
+  valueKey: 'dirname' | 'projectName' = 'dirname'
+): Choice[] {
   return appList.map(item => ({
     title: `${item.projectName}(${item.dirname})`,
-    value: item.dirname,
+    value: item[valueKey],
   }))
 }
 
