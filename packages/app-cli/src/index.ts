@@ -3,6 +3,7 @@ import { create } from '../commands/create'
 import { remove } from '../commands/remove'
 import { clean } from '../commands/clean'
 import { dev } from '../commands/dev'
+import { build } from '../commands/build'
 import path from 'path'
 
 interface IActionOptionType {
@@ -49,6 +50,15 @@ program
   .action(async (projectName: string, option: IActionOptionType) => {
     const configPath = option.c
     await dev(projectName, configPath)
+  })
+
+program
+  .command('build [projectName]')
+  .option('-c', '--config', defaultConfigPath)
+  .description('构建项目')
+  .action(async (projectName: string, option: IActionOptionType) => {
+    const configPath = option.c
+    await build(projectName, configPath)
   })
 
 program.parse()

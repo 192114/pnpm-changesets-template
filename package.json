@@ -10,7 +10,8 @@
     "create": "app-cli create",
     "remove": "app-cli remove",
     "clean": "app-cli clean",
-    "dev:app": "app-cli dev"
+    "dev:app": "app-cli dev",
+    "build:app": "app-cli build"
   },
   "keywords": [],
   "author": "",

@@ -104,6 +104,7 @@ export async function create(projectName: string, configPath: string): Promise<v
 
   // 修改模版
   const spinTemplate = ora('模板生成中')
+  await fs.remove(path.resolve(targetDir, './git'))
   const packageJsonPath = path.resolve(targetDir, './package.json')
   const targetPackageFile = await fs.readFile(packageJsonPath)
 
