@@ -1,28 +1,16 @@
 import shell from 'shelljs'
 import fs from 'fs-extra'
-import path from 'path'
-import { genChoicesList, log } from '../tools'
 import prompts from 'prompts'
 import chalk from 'chalk'
-
-// todo: 输出顺序
-
-async function buildHandle(projectName: string) {
-  // 清理对应项目的包
-  const buildName = projectName.slice(6)
-  const distPath = path.resolve(process.cwd(), 'dist', buildName)
-  const isExist = await fs.pathExists(distPath)
-
-  if (isExist) {
-    await fs.remove(distPath)
-  }
-
-  shell.exec(`pnpm --filter ${projectName} run build --outDir ${distPath}`, { async: true })
-}
+import ora from 'ora'
+import { genChoicesList, log } from '../tools'
 
 export async function build(projectName: string, configPath: string): Promise<void> {
   if (projectName) {
-    await buildHandle(projectName)
+    const command = `pnpm run --parallel -r --filter ${projectName} build`
+    const buildSpin = ora(`执行命令:${command}`).start()
+    shell.exec(command, { async: true })
+    buildSpin.succeed('构建成功')
   } else {
     const appListJson = fs.readJsonSync(configPath) as IAnswerType[]
     const appListChoices = genChoicesList(appListJson, 'projectName')
@@ -41,8 +29,14 @@ export async function build(projectName: string, configPath: string): Promise<vo
       shell.exit(1)
     }
 
-    for (const item of choicesList) {
-      await buildHandle(item)
-    }
+    const projectFilterStr = choicesList.map(item => `--filter ${item}`).join(' ')
+
+    const command = `pnpm run --parallel -r --aggregate-output ${projectFilterStr} build`
+    const buildSpin = ora(`执行命令:${command}\n`).start()
+    shell.exec(command, { async: true }, code => {
+      if (code === 0) {
+        buildSpin.succeed('构建成功')
+      }
+    })
   }
 }
