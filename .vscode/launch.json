@@ -1,6 +1,14 @@
 {
   "version": "0.2.0",
   "configurations": [
+    {
+      "name": "调试app-cli via pnpm",
+      "request": "launch",
+      "runtimeArgs": ["app-cli", "dev"],
+      "runtimeExecutable": "pnpm",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node"
+    },
     { "type": "chrome", "request": "attach", "name": "Attach 模式 - @apps/demo", "port": 8001 },
     { "type": "chrome", "request": "attach", "name": "Attach 模式 - @apps/demo1", "port": 8002 }
   ],

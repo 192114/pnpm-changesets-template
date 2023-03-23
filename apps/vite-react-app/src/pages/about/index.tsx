@@ -1,3 +1,3 @@
-export default function About(): JSX.Element {
-  return <div>about</div>
+export default function Index(): JSX.Element {
+  return <>index</>
 }

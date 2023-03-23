@@ -8,4 +8,5 @@ export const tsup: Options = {
   dts: false,
   clean: true,
   minify: false,
+  sourcemap: true,
 }
