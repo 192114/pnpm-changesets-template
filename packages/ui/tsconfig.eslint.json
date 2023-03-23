@@ -1,4 +1,4 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["**/*.ts", "**/*.tsx", ".eslintrc.cjs", "*.config.cjs", "vite.config.ts"]
+  "include": ["**/*.ts", "**/*.tsx", ".eslintrc.cjs", "*.config.cjs", "rollup.config.ts"]
 }
