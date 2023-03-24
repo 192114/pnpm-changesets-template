@@ -2,9 +2,9 @@ import { defineConfig } from 'rollup'
 import commonjs from '@rollup/plugin-commonjs'
 // import postcss from 'rollup-plugin-postcss'
 import { nodeResolve as resolve } from '@rollup/plugin-node-resolve'
-import typescript from 'rollup-plugin-typescript2'
+// import typescript from 'rollup-plugin-typescript2'
+import typescript from '@rollup/plugin-typescript'
 import { babel } from '@rollup/plugin-babel'
-import { name } from './package.json'
 
 export default defineConfig([
   {
@@ -19,6 +19,7 @@ export default defineConfig([
         babelrc: false,
         exclude: '**/node_modules/**',
         presets: ['@babel/preset-react', '@babel/preset-env'],
+        babelHelpers: 'bundled',
         plugins: [
           '@babel/plugin-transform-react-jsx',
           [
@@ -37,7 +38,7 @@ export default defineConfig([
     ],
     output: [
       {
-        name,
+        name: '@infras/ui',
         file: './dist/index.js',
         format: 'umd',
         globals: {
@@ -46,12 +47,12 @@ export default defineConfig([
         },
       },
       {
-        name,
+        name: '@infras/ui',
         file: './es/index.js',
         format: 'es',
       },
       {
-        name,
+        name: '@infras/ui',
         file: './lib/index.cjs',
         format: 'commonjs',
       },

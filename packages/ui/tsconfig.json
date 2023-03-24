@@ -4,7 +4,11 @@
     "module": "esnext",
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "react-jsx",
+    "declaration": true,
+    "target": "ES2019",
+    "lib": ["DOM", "DOM.Iterable", "ES2019"],
+    "outDir": "es"
   },
   "include": ["src"]
 }
