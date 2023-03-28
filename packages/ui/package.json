@@ -5,20 +5,17 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "browser": {
-    "./src": "./es/index.js"
-  },
-  "exports": {
-    "./src": {
-      "import": "./es/index.js",
-      "require": "./lib/index.cjs"
-    }
-  },
+  "main": "dist/lib/index.js",
+  "module": "dist/es/index.js",
+  "browser": "dist/umd/infras-ui.js",
+  "typings": "es/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "start": "pnpm run dev",
-    "dev": "rollup --config rollup.config.ts --configPlugin typescript --watch",
-    "build": "rollup --config rollup.config.ts --configPlugin typescript",
-    "prepare": "pnpm run build"
+    "dev": "pnpm run build-types && rollup --config rollup.config.ts --configPlugin typescript --watch",
+    "build": "pnpm run build-types && rollup --config rollup.config.ts --configPlugin typescript && pnpm run build-types",
+    "prepare": "pnpm run build",
+    "build-types": "tsc --emitDeclarationOnly --declaration --outDir ./dist/types"
   },
   "devDependencies": {
     "@babel/core": "^7.21.3",
@@ -30,6 +27,7 @@
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-terser": "^0.4.0",
     "@rollup/plugin-typescript": "^11.0.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",

@@ -3,12 +3,11 @@
   "compilerOptions": {
     "module": "esnext",
     "isolatedModules": true,
-    "noEmit": true,
+    "noEmit": false,
     "jsx": "react-jsx",
-    "declaration": true,
     "target": "ES2019",
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
-    "outDir": "es"
+    "declaration": false
   },
   "include": ["src"]
 }

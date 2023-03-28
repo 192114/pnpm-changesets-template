@@ -2,9 +2,9 @@ import { defineConfig } from 'rollup'
 import commonjs from '@rollup/plugin-commonjs'
 // import postcss from 'rollup-plugin-postcss'
 import { nodeResolve as resolve } from '@rollup/plugin-node-resolve'
-// import typescript from 'rollup-plugin-typescript2'
 import typescript from '@rollup/plugin-typescript'
 import { babel } from '@rollup/plugin-babel'
+import terser from '@rollup/plugin-terser'
 
 export default defineConfig([
   {
@@ -39,21 +39,32 @@ export default defineConfig([
     output: [
       {
         name: '@infras/ui',
-        file: './dist/index.js',
+        file: './dist/umd/infras-ui.js',
         format: 'umd',
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
         },
+        sourcemap: true,
       },
       {
         name: '@infras/ui',
-        file: './es/index.js',
+        file: './dist/umd/infras-ui.min.js',
+        format: 'umd',
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+        },
+        plugins: [terser()],
+      },
+      {
+        name: '@infras/ui',
+        file: './dist/es/index.js',
         format: 'es',
       },
       {
         name: '@infras/ui',
-        file: './lib/index.cjs',
+        file: './dist/lib/index.cjs',
         format: 'commonjs',
       },
     ],

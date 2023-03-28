@@ -1,4 +1,5 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["**/*.ts", "**/*.tsx", ".eslintrc.cjs", "*.config.cjs", "rollup.config.ts"]
+  "include": ["**/*.ts", "**/*.tsx", ".eslintrc.cjs", "*.config.cjs", "rollup.config.ts"],
+  "exclude": ["dist", "es", "lib"]
 }
