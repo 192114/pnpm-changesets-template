@@ -5,11 +5,12 @@ export default function Button(): JSX.Element {
   return (
     <>
       <button
+        type="button"
         onClick={() => {
           setCount(pre => pre + 1)
         }}
       >
-        {count}
+        {count}-add
       </button>
     </>
   )

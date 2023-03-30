@@ -8,8 +8,10 @@
   "main": "dist/lib/index.js",
   "module": "dist/es/index.js",
   "browser": "dist/umd/infras-ui.js",
-  "typings": "es/index.d.ts",
-  "sideEffects": false,
+  "typings": "dist/types/index.d.ts",
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "start": "pnpm run dev",
     "dev": "pnpm run build-types && rollup --config rollup.config.ts --configPlugin typescript --watch",
