@@ -1,6 +1,6 @@
 import { defineConfig } from 'rollup'
 import commonjs from '@rollup/plugin-commonjs'
-// import postcss from 'rollup-plugin-postcss'
+import postcss from 'rollup-plugin-postcss'
 import { nodeResolve as resolve } from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 import { babel } from '@rollup/plugin-babel'
@@ -15,6 +15,7 @@ export default defineConfig([
       resolve({
         extensions: ['.tsx', '.ts', '.js'],
       }),
+      postcss({}),
       babel({
         babelrc: false,
         exclude: '**/node_modules/**',
