@@ -7,7 +7,7 @@
   "license": "ISC",
   "main": "dist/lib/index.js",
   "module": "dist/es/index.js",
-  "browser": "dist/umd/infras-ui.js",
+  "browser": "dist/umd/infras-ui.min.js",
   "typings": "dist/types/index.d.ts",
   "sideEffects": [
     "*.css"
@@ -15,7 +15,7 @@
   "scripts": {
     "start": "pnpm run dev",
     "dev": "pnpm run build-types && rollup --config rollup.config.ts --configPlugin typescript --watch",
-    "build": "pnpm run build-types && rollup --config rollup.config.ts --configPlugin typescript && pnpm run build-types",
+    "build": "pnpm run build-types && rollup --config rollup.config.ts --configPlugin typescript",
     "prepare": "pnpm run build",
     "build-types": "tsc --emitDeclarationOnly --declaration --outDir ./dist/types"
   },
@@ -25,6 +25,7 @@
     "@babel/plugin-transform-runtime": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
+    "@emotion/react": "^11.10.6",
     "@infras/config": "workspace:*",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-commonjs": "^24.0.1",
@@ -37,7 +38,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup": "^3.20.0",
-    "rollup-plugin-postcss": "^4.0.2",
     "tslib": "^2.5.0",
     "typescript": "^4.9.5"
   },

@@ -5,6 +5,7 @@
     "isolatedModules": true,
     "noEmit": false,
     "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
     "target": "ES2019",
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
     "declaration": false

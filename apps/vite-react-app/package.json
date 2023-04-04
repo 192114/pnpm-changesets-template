@@ -22,7 +22,7 @@
     "vite-tsconfig-paths": "^4.0.5"
   },
   "dependencies": {
-    "@infras/ui": "workspace:^1.0.0",
+    "@infras/ui": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.2",
