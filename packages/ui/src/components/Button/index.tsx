@@ -1,22 +1,20 @@
 import { type ReactNode } from 'react'
-import { genButtonCss } from './style'
+import { buttonBaseCss, genStyleByType } from './style'
 
 export interface IButtonPropsType {
   block?: boolean
   size?: 'mini' | 'small' | 'middle' | 'large'
   htmlType?: 'button' | 'submit' | 'reset'
-  color?: string
   children?: ReactNode
+  type?: 'primary' | 'success' | 'danger' | 'warn'
 }
 
-console.log(genButtonCss)
-
 export default function Button(props: IButtonPropsType): JSX.Element {
-  const { children, htmlType = 'button' } = props
+  const { children, htmlType = 'button', type = 'primary' } = props
 
   return (
     <>
-      <button css={genButtonCss} type={htmlType}>
+      <button css={[buttonBaseCss, genStyleByType(type)]} type={htmlType}>
         {children}
       </button>
     </>

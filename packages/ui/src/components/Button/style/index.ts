@@ -1,6 +1,8 @@
-import { css } from '@emotion/react'
+import { css, type SerializedStyles } from '@emotion/react'
+import { presetColor } from '../../style'
+import type { IButtonPropsType } from '../index'
 
-const buttonBaseCss = css({
+export const buttonBaseCss = css({
   outline: 'none',
   border: 'none',
   backgroundImage: 'none',
@@ -11,7 +13,13 @@ const buttonBaseCss = css({
   cursor: 'pointer',
 })
 
-// export const genButtonCss = (): SerializedStyles => {
-//   return css(buttonBaseCss, {})
+export const genStyleByType = (type: IButtonPropsType['type']): SerializedStyles => {
+  return css({
+    backgroundColor: presetColor[type!],
+    color: presetColor.white100,
+  })
+}
+
+// export const genStyleBySize = (size: string): SerializedStyles => {
+//   return css({})
 // }
-export const genButtonCss = css([buttonBaseCss])
