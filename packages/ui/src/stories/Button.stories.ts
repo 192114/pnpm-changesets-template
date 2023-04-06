@@ -4,12 +4,12 @@ import { Button } from '../index'
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
 const meta = {
-  title: 'UI/Button',
+  title: 'Example/Button',
   component: Button,
   tags: ['autodocs'],
-  // argTypes: {
-  //   backgroundColor: { control: 'color' },
-  // },
+  argTypes: {
+    // backgroundColor: { control: 'color' },
+  },
 } satisfies Meta<typeof Button>
 
 export default meta
