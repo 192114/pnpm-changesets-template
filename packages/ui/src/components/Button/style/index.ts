@@ -13,9 +13,11 @@ export const buttonBaseCss = css({
   cursor: 'pointer',
 })
 
-export const genStyleByType = (type: IButtonPropsType['type']): SerializedStyles => {
+export const genStyleByType = (
+  type: Exclude<IButtonPropsType['type'], null | undefined>
+): SerializedStyles => {
   return css({
-    backgroundColor: presetColor[type!],
+    backgroundColor: presetColor[type],
     color: presetColor.white100,
   })
 }
