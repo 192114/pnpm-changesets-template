@@ -17,7 +17,7 @@ export default function Login(): JSX.Element {
   return (
     <div>
       <a href="tel:15542698626">tel</a>
-      <Button />
+      <Button htmlType="button">button ui</Button>
       <button type="button" onClick={onNavigate}>
         登录1
       </button>
