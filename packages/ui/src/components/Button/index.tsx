@@ -9,14 +9,15 @@ export interface IButtonPropsType {
   type?: 'primary' | 'success' | 'danger' | 'warn'
   fill?: 'solid' | 'outlined' | 'none'
   disabled?: boolean
+  loading?: boolean
 }
 
 export default function Button(props: IButtonPropsType): JSX.Element {
-  const { children = '按钮', htmlType = 'button', disabled = false } = props
+  const { children = null, htmlType = 'button', disabled = false, loading = false } = props
 
   return (
     <>
-      <button css={genStyleByProps(props)} type={htmlType} disabled={disabled}>
+      <button css={genStyleByProps(props)} type={htmlType} disabled={disabled || loading}>
         {children}
       </button>
     </>

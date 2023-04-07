@@ -24,7 +24,9 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
-    // 缩进两个字符
+    /**
+     *  交由 prettier 处理
+     * // 缩进两个字符
     indent: 'off',
     '@typescript-eslint/indent': ['error', 2],
     // 强制不使用分号
@@ -34,6 +36,7 @@ module.exports = {
     // 字符串字面量使用单引号包裹
     quotes: 'off',
     '@typescript-eslint/quotes': ['error', 'single', { avoidEscape: true }],
+     */
 
     // 运算符两侧需要有空格，并增加对枚举类型支持
     'space-infix-ops': 'off',

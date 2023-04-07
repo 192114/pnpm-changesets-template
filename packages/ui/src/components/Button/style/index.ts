@@ -15,8 +15,15 @@ export const buttonBaseCss = css({
   userSelect: 'none',
   cursor: 'pointer',
   transition: 'all 0.3s ease',
+  position: 'relative',
   '&:hover': {
     opacity: 0.7,
+  },
+  '&:after': {
+    content: '""',
+    position: 'absolute',
+    inset: 0,
+    borderRadius: 'inherit',
   },
 })
 
@@ -28,11 +35,29 @@ const genStyleByTypeAndFill = (
   const textColor = fill !== 'solid' ? baseColor : presetColor.white100
   const backgroundColor = fill !== 'solid' ? 'transparent' : baseColor
   const borderColor = fill !== 'none' ? baseColor : 'transparent'
+  const activeStyleStart =
+    fill !== 'none'
+      ? {
+          opacity: 0,
+          boxShadow: `0 0 0 6px ${baseColor}`,
+          transition: '0.4s',
+        }
+      : null
+  const activeStyleEnd =
+    fill !== 'none'
+      ? {
+          opacity: 0.6,
+          boxShadow: 'none',
+          transition: '0s',
+        }
+      : null
 
   return css({
     backgroundColor,
     color: textColor,
     border: `1px solid ${borderColor}`,
+    '&:after': activeStyleStart,
+    '&:active:after': activeStyleEnd,
   })
 }
 
