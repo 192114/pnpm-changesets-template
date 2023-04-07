@@ -14,7 +14,10 @@ export const buttonBaseCss = css({
   touchAction: 'manipulation',
   userSelect: 'none',
   cursor: 'pointer',
-  transition: 'all 0.1s ease',
+  transition: 'all 0.3s ease',
+  '&:hover': {
+    opacity: 0.7,
+  },
 })
 
 const genStyleByTypeAndFill = (

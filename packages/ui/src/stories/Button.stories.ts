@@ -31,3 +31,12 @@ export const primary: Story = {
     type: 'primary',
   },
 }
+
+export const disabled: Story = {
+  args: {
+    htmlType: 'button',
+    children: '按钮',
+    type: 'primary',
+    disabled: true,
+  },
+}
