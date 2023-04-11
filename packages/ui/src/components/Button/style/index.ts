@@ -1,4 +1,4 @@
-import { css, type SerializedStyles } from '@emotion/react'
+import { css, keyframes, type SerializedStyles } from '@emotion/react'
 import { presetColor } from '../../style'
 import type { IButtonPropsType } from '../index'
 
@@ -16,6 +16,7 @@ export const buttonBaseCss = css({
   cursor: 'pointer',
   transition: 'all 0.3s ease',
   position: 'relative',
+  flexWrap: 'nowrap',
   '&:hover': {
     opacity: 0.7,
   },
@@ -132,3 +133,41 @@ export const genStyleByProps = (payload: IButtonPropsType): SerializedStyles => 
     genStyleByDisabled(disabled),
   ])
 }
+
+// display: inline-flex;
+//     align-items: center;
+//     color: inherit;
+//     font-style: normal;
+//     line-height: 0;
+//     text-align: center;
+//     text-transform: none;
+//     vertical-align: -0.125em;
+//     text-rendering: optimizeLegibility;
+//     -webkit-font-smoothing: antialiased;
+//     -moz-osx-font-smoothing: grayscale;
+
+export const iconStyle = css({
+  display: 'inline-flex',
+  color: 'inherit',
+  fontStyle: 'normal',
+  lineHeight: 0,
+  textAlign: 'center',
+  textTransform: 'none',
+  verticalAlign: '-0.125em',
+  textRendering: 'optimizeLegibility',
+  WebkitFontSmoothing: 'antialiased',
+  MozOsxFontSmoothing: 'grayscale',
+})
+
+const loadingCircle = keyframes`
+  100% {
+    transform: rotate(360deg);
+  }
+`
+
+export const iconSpinStyle = css({
+  animation: `${loadingCircle} 1s infinite linear`,
+  marginInlineEnd: 8,
+})
+
+export const loadingIconStyle = css([iconStyle, iconSpinStyle])
