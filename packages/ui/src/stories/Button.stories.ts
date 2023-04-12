@@ -40,3 +40,12 @@ export const disabled: Story = {
     disabled: true,
   },
 }
+
+export const loading: Story = {
+  args: {
+    htmlType: 'button',
+    children: '按钮',
+    type: 'primary',
+    loading: true,
+  },
+}

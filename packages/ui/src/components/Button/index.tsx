@@ -1,7 +1,7 @@
-import { type ReactNode } from 'react'
+import { type ReactNode, type MouseEvent } from 'react'
 import { genStyleByProps, loadingIconStyle } from './style'
 
-export interface IButtonPropsType {
+export interface IButtonBasePropsType {
   block?: boolean
   size?: 'mini' | 'small' | 'middle' | 'large'
   htmlType?: 'button' | 'submit' | 'reset'
@@ -10,7 +10,11 @@ export interface IButtonPropsType {
   fill?: 'solid' | 'outlined' | 'none'
   disabled?: boolean
   loading?: boolean
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
+
+export type ButtonPropsType = IButtonBasePropsType &
+  Omit<React.ButtonHTMLAttributes<HTMLAnchorElement | HTMLButtonElement>, 'type' | 'onClick'>
 
 function LoadingIcon() {
   return (
@@ -28,15 +32,28 @@ function LoadingIcon() {
   )
 }
 
-export default function Button(props: IButtonPropsType): JSX.Element {
+export default function Button(props: ButtonPropsType): JSX.Element {
   const { children = null, htmlType = 'button', disabled = false, loading = false } = props
+
+  const clickHandle = (e: MouseEvent<HTMLButtonElement>) => {
+    const { onClick } = props
+
+    onClick?.(e)
+  }
 
   return (
     <>
-      <button css={genStyleByProps(props)} type={htmlType} disabled={disabled || loading}>
-        <span css={loadingIconStyle}>
-          <LoadingIcon />
-        </span>
+      <button
+        css={genStyleByProps(props)}
+        type={htmlType}
+        disabled={disabled || loading}
+        onClick={clickHandle}
+      >
+        {loading && (
+          <span css={loadingIconStyle}>
+            <LoadingIcon />
+          </span>
+        )}
 
         <span>{children}</span>
       </button>

@@ -1,6 +1,6 @@
 import { css, keyframes, type SerializedStyles } from '@emotion/react'
 import { presetColor } from '../../style'
-import type { IButtonPropsType } from '../index'
+import type { IButtonBasePropsType } from '../index'
 
 type NotUndefined<T> = Exclude<T, null | undefined>
 
@@ -14,7 +14,6 @@ export const buttonBaseCss = css({
   touchAction: 'manipulation',
   userSelect: 'none',
   cursor: 'pointer',
-  transition: 'all 0.3s ease',
   position: 'relative',
   flexWrap: 'nowrap',
   '&:hover': {
@@ -29,8 +28,8 @@ export const buttonBaseCss = css({
 })
 
 const genStyleByTypeAndFill = (
-  type: NotUndefined<IButtonPropsType['type']>,
-  fill: NotUndefined<IButtonPropsType['fill']>
+  type: NotUndefined<IButtonBasePropsType['type']>,
+  fill: NotUndefined<IButtonBasePropsType['fill']>
 ): SerializedStyles => {
   const baseColor = presetColor[type]
   const textColor = fill !== 'solid' ? baseColor : presetColor.white100
@@ -62,7 +61,7 @@ const genStyleByTypeAndFill = (
   })
 }
 
-const genStyleBySize = (size: NotUndefined<IButtonPropsType['size']>): SerializedStyles => {
+const genStyleBySize = (size: NotUndefined<IButtonBasePropsType['size']>): SerializedStyles => {
   const sizeStyleMap = {
     mini: {
       borderRadius: '2px',
@@ -96,7 +95,7 @@ const genStyleBySize = (size: NotUndefined<IButtonPropsType['size']>): Serialize
   return css(sizeStyleMap[size])
 }
 
-const genStyleByBlock = (block: NotUndefined<IButtonPropsType['block']>): SerializedStyles => {
+const genStyleByBlock = (block: NotUndefined<IButtonBasePropsType['block']>): SerializedStyles => {
   if (block) {
     return css({
       display: 'flex',
@@ -109,20 +108,21 @@ const genStyleByBlock = (block: NotUndefined<IButtonPropsType['block']>): Serial
   })
 }
 
-const genStyleByDisabled = (disabled: NotUndefined<IButtonPropsType['disabled']>) => {
+const genStyleByDisabled = (disabled: NotUndefined<IButtonBasePropsType['disabled']>) => {
   return css({
     opacity: disabled ? 0.6 : 1,
     cursor: disabled ? 'not-allowed' : 'pointer',
   })
 }
 
-export const genStyleByProps = (payload: IButtonPropsType): SerializedStyles => {
+export const genStyleByProps = (payload: IButtonBasePropsType): SerializedStyles => {
   const {
     block = false,
     size = 'middle',
     fill = 'solid',
     type = 'primary',
     disabled = false,
+    loading = false,
   } = payload
 
   return css([
@@ -130,21 +130,9 @@ export const genStyleByProps = (payload: IButtonPropsType): SerializedStyles => 
     genStyleByBlock(block),
     genStyleBySize(size),
     genStyleByTypeAndFill(type, fill),
-    genStyleByDisabled(disabled),
+    genStyleByDisabled(disabled || loading),
   ])
 }
-
-// display: inline-flex;
-//     align-items: center;
-//     color: inherit;
-//     font-style: normal;
-//     line-height: 0;
-//     text-align: center;
-//     text-transform: none;
-//     vertical-align: -0.125em;
-//     text-rendering: optimizeLegibility;
-//     -webkit-font-smoothing: antialiased;
-//     -moz-osx-font-smoothing: grayscale;
 
 export const iconStyle = css({
   display: 'inline-flex',
