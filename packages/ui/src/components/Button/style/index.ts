@@ -16,6 +16,7 @@ export const buttonBaseCss = css({
   cursor: 'pointer',
   position: 'relative',
   flexWrap: 'nowrap',
+  transition: 'all .2s cubic-bezier(.645,.045,.355,1)',
   '&:hover': {
     opacity: 0.7,
   },
@@ -134,18 +135,20 @@ export const genStyleByProps = (payload: IButtonBasePropsType): SerializedStyles
   ])
 }
 
-export const iconStyle = css({
-  display: 'inline-flex',
-  color: 'inherit',
-  fontStyle: 'normal',
-  lineHeight: 0,
-  textAlign: 'center',
-  textTransform: 'none',
-  verticalAlign: '-0.125em',
-  textRendering: 'optimizeLegibility',
-  WebkitFontSmoothing: 'antialiased',
-  MozOsxFontSmoothing: 'grayscale',
-})
+export const iconStyle = (hasMarginRight: boolean): SerializedStyles =>
+  css({
+    display: 'inline-flex',
+    color: 'inherit',
+    fontStyle: 'normal',
+    lineHeight: 0,
+    textAlign: 'center',
+    textTransform: 'none',
+    verticalAlign: '-0.125em',
+    textRendering: 'optimizeLegibility',
+    WebkitFontSmoothing: 'antialiased',
+    MozOsxFontSmoothing: 'grayscale',
+    marginInlineEnd: hasMarginRight ? 8 : 0,
+  })
 
 const loadingCircle = keyframes`
   100% {
@@ -155,7 +158,8 @@ const loadingCircle = keyframes`
 
 export const iconSpinStyle = css({
   animation: `${loadingCircle} 1s infinite linear`,
-  marginInlineEnd: 8,
+  transition: 'all 0.3s',
 })
 
-export const loadingIconStyle = css([iconStyle, iconSpinStyle])
+export const loadingIconStyle = (hasMarginRight: boolean): SerializedStyles =>
+  css([iconStyle(hasMarginRight), iconSpinStyle])

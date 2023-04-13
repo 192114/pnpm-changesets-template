@@ -49,3 +49,37 @@ export const loading: Story = {
     loading: true,
   },
 }
+
+function Icon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="1em"
+      height="1em"
+      fill="none"
+      viewBox="0 0 48 48"
+    >
+      <path
+        stroke="currentColor"
+        strokeLinejoin="bevel"
+        strokeWidth="4"
+        d="M6 24.008V42h36V24"
+      ></path>
+      <path
+        stroke="currentColor"
+        strokeLinejoin="bevel"
+        strokeWidth="4"
+        d="M33 23l-9 9-9-9M23.992 6v26"
+      ></path>
+    </svg>
+  )
+}
+
+export const iconButton: Story = {
+  args: {
+    htmlType: 'button',
+    children: '按钮',
+    type: 'primary',
+    icon: <Icon />,
+  },
+}
