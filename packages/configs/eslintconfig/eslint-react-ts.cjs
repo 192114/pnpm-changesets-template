@@ -24,20 +24,6 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
-    /**
-     *  交由 prettier 处理
-     * // 缩进两个字符
-    indent: 'off',
-    '@typescript-eslint/indent': ['error', 2],
-    // 强制不使用分号
-    semi: 'off',
-    '@typescript-eslint/semi': ['error', 'never'],
-
-    // 字符串字面量使用单引号包裹
-    quotes: 'off',
-    '@typescript-eslint/quotes': ['error', 'single', { avoidEscape: true }],
-     */
-
     // 运算符两侧需要有空格，并增加对枚举类型支持
     'space-infix-ops': 'off',
     '@typescript-eslint/space-infix-ops': ['error', { int32Hint: false }],
@@ -61,10 +47,6 @@ module.exports = {
         asyncArrow: 'always',
       },
     ],
-
-    //  用逗号分割多行结构，始终加上最有一个逗号（单行不用）
-    // 'comma-dangle': 'off',
-    // '@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
 
     // 不要使用 new Array() 和 Array() 创建数组，除非为了构造某一长度的空数组
     'no-array-constructor': 'off',
